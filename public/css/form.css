@@ -1,0 +1,40 @@
+:root{
+    --color-oscuro: rgb(52, 58, 64);
+    --color-grisclaro:rgb(224, 226, 229);
+}
+
+div .formulario {
+    width: 60%;    
+    margin:auto;
+    padding: 10px;
+    
+}
+form{
+    background-color: var(--color-oscuro);
+    padding: 5px;
+    width: 80%;  
+    margin: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;  
+}
+form input[type=number]{
+    width: 30%;
+}
+
+.formulario .seccion {
+    width: 100%;
+    margin-bottom: 4px;  
+}
+.seccion input[type=text]{
+    width: 95%;
+}
+
+.formulario .seccion input[type=submit]{
+    
+    margin:5px auto;
+    width: 100%;
+}
+.formulario label {
+    color: var(--color-grisclaro);
+}
+

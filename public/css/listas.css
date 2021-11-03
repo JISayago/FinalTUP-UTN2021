@@ -1,0 +1,21 @@
+h1 a{
+    float: right;    
+}
+.iconos_accion{
+    height: 30px;    
+    max-width: 90%;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    
+}
+
+.iconos_accion a{
+    height: 30px; 
+}
+.accion_a a{
+    width: 20%;
+}
+.iconos_accion a i{
+    color: white;
+}
