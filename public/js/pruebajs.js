@@ -1,0 +1,6 @@
+function prueba(texto) {
+
+
+
+}
+ 

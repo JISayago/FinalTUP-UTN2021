@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
 
 @section('content_header')
 <h1 style="font-weight: bolder">Eliminar Cliente</h1>
@@ -52,7 +51,7 @@
             @if(!$cliente->realizo_pedido ? 'chequed' : '')@endif>   
         </div> 
         <div class="seccion">
-            <input class="form-control btn btn-info" type="submit" value="Eliminar">
+            <input class="form-control btn btn-danger" type="submit" value="Eliminar">
         </div>
     </div>
 </form>
@@ -61,6 +60,7 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="../../css/form.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 @stop
 
 @section('js')

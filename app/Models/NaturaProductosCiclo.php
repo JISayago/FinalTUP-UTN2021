@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido_Cliente extends Model
+class NaturaProductosCiclo extends Model
 {
     use HasFactory;
+
+    public $table = "natura_productos_ciclo";
 }

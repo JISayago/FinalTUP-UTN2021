@@ -7,14 +7,17 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     public function index()
     {
-        $clientes = Cliente::paginate();    
+        $clientes = Cliente::where('nombre','!=',"Natura")->paginate(7);    
         return view('cliente.listaClientes', compact('clientes'));  
     }    
     public function show($id)
     { 
-         $cliente = CLiente::findorfail($id);
+         $cliente = Cliente::findorfail($id);
          return view('cliente/eliminarcliente',compact('cliente'));     
     }
 
@@ -37,6 +40,7 @@ class ClienteController extends Controller
         $cliente->saldo_favor =  $con_punto_favor;
         $con_punto_deuda = str_replace(",",".", $request->input('saldo_deuda'));    
         $cliente->saldo_deuda =  $con_punto_deuda;
+        $cliente->comprando =  false;
         if($request->input('realizo_pedido') == "No"){
             $cliente->realizo_pedido = false;
         }

@@ -7,10 +7,25 @@ use Illuminate\Http\Request;
 
 class ProductoController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     public function index()
     {
-        $productos = Producto::paginate();    
+        $productos = Producto::paginate(7);    
+        return view('producto.listaProductos', compact('productos'));  
+    }
+
+    public function indexStock()
+    {
+        $productos = Producto::where('cantidad', '>', 0)->paginate(7);          
+        return view('producto.listaProductos', compact('productos'));  
+    }   
+
+    public function indexSinStock()
+    {
+        $productos = Producto::where('cantidad', '=', 0)->paginate(7);          
         return view('producto.listaProductos', compact('productos'));  
     }
 
@@ -35,20 +50,28 @@ class ProductoController extends Controller
         'link_imagen => required',
 
         ]);
+        $producto = Producto::where('codigo',$request->input('codigo'))->first();
+        if($producto === null){
         $producto = new Producto(); 
-        $producto->codigo = $request->input('codigo');        
-        $producto->descripcion = $request->input('descripcion'); 
-        $con_punto = str_replace(",",".", $request->input('precio'));    
-        $producto->precio =  $con_punto;
-        $producto->cantidad = $request->input('cantidad');        
-        if($request->input('discontinuado') == "No"){
-            $producto->discontinuado = false;
+        $producto->codigo = $request->input('codigo');             
+        $producto->descripcion = trim($request->input('descripcion'));          
+        $producto->precio =  (float)str_replace(".","",$request->input('precio'));
+        $producto->cantidad = $request->input('cantidad');
+        $producto->discontinuado = false;
+        $producto->desde_wspp = false;
+        $producto->en_carrito = false;
+        $producto->en_reserva = 0; 
+        $producto->en_espera = 0;      
+        $producto->link_imagen = "Sin asignar";
         }
         else{
-            $producto->discontinuado = true;
-        }       
-        $producto->link_imagen = $request->input('link_imagen');
-        $producto->save();   
+            $producto->codigo = $request->input('codigo');             
+            $producto->descripcion = trim($request->input('descripcion'));
+            $producto->descripcion = $request->input('cantidad');           
+            $producto->precio =  (float)str_replace(".","",$request->input('precio'));
+        }
+        
+        $producto->save();
         
         return redirect('/lista_producto');
     }
@@ -73,9 +96,13 @@ class ProductoController extends Controller
         $producto = Producto::findorfail($id);        
         $producto->codigo = $request->input('codigo');        
         $producto->descripcion = $request->input('descripcion'); 
-        $con_punto = str_replace(",",".", $request->input('precio'));    
-        $producto->precio =  $con_punto;
-        $producto->cantidad = $request->input('cantidad');        
+        $producto->precio = (float)$request->input('precio');  
+        $producto->cantidad = $request->input('cantidad');   
+        $producto->desde_wspp = false;
+        $producto->en_carrito = false;
+        $producto->en_reserva = 0;   
+        $producto->en_espera = 0;
+        
         if($request->input('discontinuado') == "No"){
             $producto->discontinuado = false;
         }
@@ -93,5 +120,23 @@ class ProductoController extends Controller
         Producto::destroy($id); 
         return redirect('/lista_producto');      
     }
+    public function stockear($p_id,$c){
+        $producto= Producto::findorfail($p_id);
+        if($c > $producto->en_espera){
+            $producto->cantidad += $producto->en_espera;
+            $producto->en_espera = 0;
+        }
+        else{
+            $producto->cantidad += $c;
+            $producto->en_espera-= $c;
+        }
+        $producto->save();
+        return redirect()->back();
+    }
+
+    public function reorganizar_pedido($pedido_individual){
+
+    }
+    
 
 }

@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
 
 @section('content_header')
 <h1 style="font-weight: bolder">Lista de clientes<a href="/cliente"><i class="bi bi-plus-circle text-success"></i></a></h1>
@@ -19,14 +18,19 @@
     </thead>
     <tbody>
         @foreach ($clientes as $cliente)
-        <tr class =  "{{($cliente->realizo_pedido ? 'text-warning' : '')}}">
+        <tr class =  "{{($cliente->saldo_deuda > 0 ? 'text-danger' : '')}}
+            {{($cliente->saldo_favor > 0 ? 'text-success' : '')}}
+            ">
             <th class="text-center" scope="row">{{$cliente->nombre}}</th>
             <td class="text-center">{{$cliente->saldo_deuda}}</td>
             <td class="text-center">{{$cliente->saldo_favor}}</td>
             <td class="text-center">
                 <div class="iconos_accion accion_a">
-                    <a class="btn btn-success" href=""><i class="bi bi-clipboard-plus"></i></a><!--agregar pedido a ese cliente-->
-                    <a class="btn btn-info" href=""><i class="bi bi-clipboard-check"></i></a><!--ver el pedido del cliente-->
+                    @if($cliente->realizo_pedido)
+                    <i class="bi bi-clipboard-check text-warning"></i>
+                    @else
+                    <i class="bi bi-clipboard-minus text-light "></i>
+                    @endif
                     <a class="btn btn-danger" href="/cliente/{{$cliente->id}}"><i class="bi bi-trash"></i></a><!--elimimar cliente-->
                     <a class="btn btn-warning" href="/cliente/editar/{{$cliente->id}}"><i class="bi bi-pencil-square "></i></a><!--editar cliente-->
                 </div>
@@ -36,6 +40,7 @@
          
     </tbody>
 </table>
+{{$clientes->links('pagination::bootstrap-4')}}
 @stop
 
 @section('css')

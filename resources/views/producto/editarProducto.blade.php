@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
 
 @section('content_header')
 <h1 style="font-weight: bolder">Editar Producto</h1>
@@ -85,7 +84,7 @@
             @endif
         </div>
         <div class="seccion">
-            <input class="form-control btn btn-info" type="submit" value="Guardar">
+            <input class="form-control btn btn-warning text-light" type="submit" value="Editar">
         </div>
     </div>
 </form>
@@ -94,6 +93,7 @@
 @section('css')
 <link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="../../css/form.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
 @stop
 
 @section('js')

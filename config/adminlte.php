@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/lista_producto',//aca iria la pantalla principal
+    'dashboard_url' => '/lista_cliente',//aca iria la pantalla principal
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -237,19 +237,36 @@ return [
         ],
 
         // Sidebar items:
-        [
+       /* [
             'type' => 'sidebar-menu-search',
             'text' => 'Buscar...',
-        ],
+        ],*/
         /*[
             'text' => 'blog',
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
+            
         ],*/
         [
             'text'        => 'Lista de Productos',
-            'url'         => 'lista_producto',
             'icon'        => 'bi bi-handbag-fill',
+            'submenu' => [
+                [
+                    'text' => 'Productos en Stock',
+                    'icon' => 'bi bi-bag-check',
+                    'url'  => 'lista_producto_stock',
+                ],
+                [
+                    'text' => 'Todos los Productos',
+                    'icon' => 'bi bi-bag-x',
+                    'url'  => 'lista_producto',
+                ],
+                [
+                    'text' => 'Productos sin Stock',
+                    'icon' => 'bi bi-bag',
+                    'url'  => 'lista_producto_sin',
+                ],
+            ],
             //'label'       => 4,
             //'label_color' => 'success',
         ],
@@ -259,6 +276,30 @@ return [
             'url'  => 'lista_cliente',
             'icon' => 'bi bi-people-fill',
         ],
+        [
+            'text' => 'Ciclos',
+            'url'  => 'lista_ciclo',
+            'icon' => 'bi bi-calendar3-event',
+        ],
+        [
+            'text' => 'Venta',
+            'url'  => '#',
+            'icon' => 'bi bi-cart2',
+            'submenu' => [
+                [
+                    'text' => 'Realizar Venta',
+                    'icon' => 'bi bi-cart-plus',
+                    'url'  => '/venta/',
+                ],
+                [
+                    'text' => 'Historial de Ventas',
+                    'icon' => 'bi bi-clock-history',
+                    'url'  => '/lista_ventas',
+                ],
+                
+            ]
+            
+        ],      
         /*[
             'text' => 'change_password',
             'url'  => 'admin/settings',
@@ -271,7 +312,7 @@ return [
                 [
                     'text' => 'Pedidos de Clientes',
                     'icon' => 'bi bi-clipboard-plus',
-                    'url'  => '#',
+                    'url'  => '/lista_pedidos',
                 ],
                 /*[
                     'text'    => 'level_one',
@@ -300,9 +341,15 @@ return [
                 [
                     'text' => 'Pedido a Natura',
                     'icon' => 'bi bi-clipboard-data',
-                    'url'  => '#',
+                    'url'  => '/listado_pedido_natura',// el 1 es del ciclo correspondiente
                 ],
             ],
+        ],
+        
+        [
+            'text' => 'Balance',
+            'url'  => '/balance',
+            'icon' => 'bi bi-arrow-left-right',
         ],
         /*['header' => 'labels'],
         [
